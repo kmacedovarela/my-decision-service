@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="https://kiegroup.org/dmn/_952A3835-BA5A-4718-B9FD-86801F1E96E1" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_FCF31683-15F2-452F-83C0-F3CAB5A966BA" name="Traffic Violation" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="https://kiegroup.org/dmn/_952A3835-BA5A-4718-B9FD-86801F1E96E1">
+  <dmn:extensionElements/>
+  <dmn:itemDefinition id="_ABB5A7B2-9F4E-4FFF-812D-27387BD27E8B" name="Driver" isCollection="false">
+    <dmn:itemComponent id="_548DF689-1825-4899-8A61-103794D3E338" name="Age" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_782BBA22-0269-49A0-819D-5C12A0EAC577" name="Country" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+      <dmn:allowedValues kie:constraintType="enumeration" id="_0DC2FE54-B26A-4047-BB6E-09D956D65B13">
+        <dmn:text>"Brazil", "France", "USA"</dmn:text>
+      </dmn:allowedValues>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_A8CB78C6-9DB3-4D0C-B046-691A0B8E7524" name="Points" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:inputData id="_FD7EE4AC-E64D-440E-A36E-845F69C15C23" name="Driver">
+    <dmn:extensionElements/>
+    <dmn:variable id="_525E2980-4329-4935-93FA-4E3E94CBE93D" name="Driver" typeRef="Driver"/>
+  </dmn:inputData>
+  <dmn:decision id="_E72EAF73-31C5-4DF9-994A-26E1737FD5E6" name="Should receive a fine?">
+    <dmn:extensionElements/>
+    <dmn:variable id="_EF6AC149-9B63-455D-82DD-0DDAD23FB02E" name="Should receive a fine?" typeRef="boolean"/>
+    <dmn:informationRequirement id="_BFAFF009-9E8D-469A-B9F2-305F523E15C3">
+      <dmn:requiredInput href="#_FD7EE4AC-E64D-440E-A36E-845F69C15C23"/>
+    </dmn:informationRequirement>
+    <dmn:decisionTable id="_A633EC97-35D1-4910-ABE7-F48B0BEF7C4B" hitPolicy="UNIQUE" preferredOrientation="Rule-as-Row">
+      <dmn:input id="_56E5A92E-40AD-4D62-BBD1-EC72D2C87516">
+        <dmn:inputExpression id="_F27272BA-E70A-4C81-B6E6-3F02854438BD" typeRef="number">
+          <dmn:text>Driver.Age</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:input id="_8B36A47F-A478-4426-8056-10357AC3DF71">
+        <dmn:inputExpression id="_48FE91C5-0315-49E0-A160-014754B9831C" typeRef="string">
+          <dmn:text>Driver.Country</dmn:text>
+        </dmn:inputExpression>
+        <dmn:inputValues kie:constraintType="enumeration" id="_9414CA53-65C7-4D89-B2AF-64D28BE76078">
+          <dmn:text>"Brazil", "France", "USA"</dmn:text>
+        </dmn:inputValues>
+      </dmn:input>
+      <dmn:input id="_4DDAE2FB-FD5C-420E-978D-2A9BF3017368">
+        <dmn:inputExpression id="_F87A91A3-26E9-4830-88E0-45BC02B1F4C2" typeRef="number">
+          <dmn:text>Driver.Points</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
+      <dmn:output id="_BD7D37B5-24B4-4FF1-AC26-5FB5DC92BAE7"/>
+      <dmn:annotation name="Notes"/>
+      <dmn:rule id="_F7D752EA-EED1-46C8-8F94-2C9A7B41B613">
+        <dmn:inputEntry id="_EA959DD6-B229-4FE9-82FE-6E76DD6A39C8">
+          <dmn:text>&gt; 18</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_37FC399E-4B19-4746-8F36-DE43B583A05B">
+          <dmn:text>"Brazil"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_7C700AAB-165C-4E59-B6CD-578D37734140">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_63FF4B6A-3086-4F16-9E58-0C4F9D6891D7">
+          <dmn:text>true</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_88BD3289-211D-4F11-B893-E433D6E8B4C9">
+        <dmn:inputEntry id="_F6FD4947-DCC9-42CE-B79F-C221AC4F5E2D">
+          <dmn:text> &lt;18</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_7675BD17-55A9-4101-B5E6-3F931E145FC6">
+          <dmn:text>"Brazil"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_565E0778-7F14-4A10-B062-DD7BA2D5CD0B">
+          <dmn:text>-</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_D039A6BA-23BA-4BAE-A2EE-50249A4D6012">
+          <dmn:text>false</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+    </dmn:decisionTable>
+  </dmn:decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_01D0AFA3-55A6-43A3-BAEA-00D9F02B99F1" name="DRG">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_A633EC97-35D1-4910-ABE7-F48B0BEF7C4B">
+            <kie:width>50</kie:width>
+            <kie:width>100</kie:width>
+            <kie:width>113</kie:width>
+            <kie:width>106</kie:width>
+            <kie:width>167</kie:width>
+            <kie:width>100</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-drg-_FD7EE4AC-E64D-440E-A36E-845F69C15C23" dmnElementRef="_FD7EE4AC-E64D-440E-A36E-845F69C15C23" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="433" y="161" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_E72EAF73-31C5-4DF9-994A-26E1737FD5E6" dmnElementRef="_E72EAF73-31C5-4DF9-994A-26E1737FD5E6" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="434" y="43" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-drg-_BFAFF009-9E8D-469A-B9F2-305F523E15C3-AUTO-TARGET" dmnElementRef="_BFAFF009-9E8D-469A-B9F2-305F523E15C3">
+        <di:waypoint x="483" y="186"/>
+        <di:waypoint x="484" y="93"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>
